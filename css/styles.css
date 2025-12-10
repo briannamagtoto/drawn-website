@@ -1,0 +1,2958 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Director';
+    src: url('https://assets.website-files.com/5f5b64b2a0e1c59b7e0a3e0d/5f5b64b2a0e1c5f7640a3e2f_Director-Variable.woff2') format('woff2');
+    font-weight: 100 900;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'DrawvecticaMini';
+    src: url('../assets/DrawveticaMini.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+:root {
+    --charcoal-black: #1a1a1a;
+    --charcoal-gray: #4a4a4a;
+    --charcoal-light: #7a7a7a;
+    --paper-white: #f8f6f3;
+    --paper-cream: #f4f2ed;
+    --sketch-blue: #4a90a4;
+    --accent-rust: #8b4513;
+    --window-bg: rgba(248, 246, 243, 0.95);
+    --sidebar-bg: rgba(244, 242, 237, 0.9);
+}
+
+body {
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: var(--paper-cream);
+    user-select: none;
+    cursor: default;
+    margin: 0;
+    padding: 0;
+}
+
+/* ========================================
+   INTRO SCREEN
+   ======================================== */
+
+.intro-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #87CEEB 0%, #E0F6FF 50%, #FFE4E1 100%);
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease;
+    cursor: none; /* Hide default cursor for cloud cursor */
+}
+
+.intro-text {
+    font-family: 'Director', cursive;
+    font-size: 4rem;
+    font-weight: 300;
+    letter-spacing: -2px;
+    color: white;
+    text-align: center;
+    animation: floatText 3s ease-in-out infinite, fadeIn 1s ease;
+    text-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.3),
+        0 4px 20px rgba(0, 0, 0, 0.2),
+        0 0 40px rgba(255, 255, 255, 0.4);
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+}
+
+.intro-subtext {
+    position: absolute;
+    bottom: 40px;
+    font-family: 'Director', cursive;
+    font-size: 0.9rem;
+    font-weight: 300;
+    letter-spacing: -0.5px;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    animation: fadeIn 1s ease 0.5s both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes floatText {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Cloud Cursor */
+.cloud-cursor {
+    position: fixed;
+    font-size: 24px;
+    pointer-events: none;
+    z-index: 10001;
+    user-select: none;
+    transform: translate(-50%, -50%);
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+/* Cloud Trail */
+.cloud-trail {
+    position: fixed;
+    font-size: 16px;
+    pointer-events: none;
+    z-index: 10000;
+    user-select: none;
+    opacity: 0.8;
+    animation: cloudFade 1.2s ease-out forwards;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes cloudFade {
+    0% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) translateY(-10px);
+    }
+}
+
+
+/* ========================================
+   DESKTOP BACKGROUND
+   ======================================== */
+
+.desktop-background {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background:
+        radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.03) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(26, 26, 26, 0.02) 1px, transparent 1px),
+        var(--paper-cream);
+}
+
+/* Desktop Title */
+.desktop-title {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    font-weight: 400;
+    color: var(--charcoal-black);
+    z-index: 5;
+    opacity: 0.8;
+    pointer-events: none;
+    text-shadow: 2px 2px 4px rgba(26, 26, 26, 0.1);
+    font-family: 'Director', cursive;
+    letter-spacing: -1px;
+}
+
+/* ========================================
+   MENU BAR
+   ======================================== */
+
+.menu-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: rgba(248, 246, 243, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(26, 26, 26, 0.1);
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--charcoal-black);
+    z-index: 1000;
+}
+
+.menu-item {
+    padding: 0 12px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.menu-item:hover {
+    background: rgba(74, 74, 74, 0.1);
+}
+
+.apple-menu {
+    font-weight: bold;
+}
+
+.menu-right {
+    margin-left: auto;
+    display: flex;
+}
+
+.time {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Desktop Icons */
+.desktop-icons {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.desktop-icon {
+    position: absolute;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.desktop-icon:hover {
+    transform: scale(1.05);
+}
+
+.icon-image {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 8px;
+    border-radius: 12px;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+/* Hand-drawn folder icon */
+.folder-icon {
+    background: var(--sketch-blue);
+    border: 3px solid var(--charcoal-gray);
+    border-radius: 8px 8px 4px 4px;
+    position: relative;
+    transform: rotate(1deg);
+}
+
+.folder-icon::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 8px;
+    width: 24px;
+    height: 8px;
+    background: var(--sketch-blue);
+    border: 3px solid var(--charcoal-gray);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+}
+
+.folder-icon::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: var(--charcoal-gray);
+    opacity: 0.3;
+    box-shadow: 0 8px 0 var(--charcoal-gray), 0 16px 0 var(--charcoal-gray);
+}
+
+/* Hand-drawn app icon */
+.app-icon {
+    background: var(--accent-rust);
+    border: 3px solid var(--charcoal-gray);
+    border-radius: 16px;
+    transform: rotate(-1deg);
+    position: relative;
+}
+
+.app-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    height: 30px;
+    background: var(--paper-white);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--charcoal-gray);
+}
+
+/* Hand-drawn file icon */
+.file-icon {
+    background: var(--paper-white);
+    border: 3px solid var(--charcoal-gray);
+    border-radius: 6px;
+    transform: rotate(2deg);
+    position: relative;
+}
+
+.file-icon::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 8px;
+    right: 8px;
+    height: 2px;
+    background: var(--charcoal-light);
+    box-shadow: 
+        0 6px 0 var(--charcoal-light),
+        0 12px 0 var(--charcoal-light),
+        0 18px 0 var(--charcoal-light);
+}
+
+.icon-label {
+    font-size: 12px;
+    color: var(--charcoal-black);
+    text-align: center;
+    padding: 2px 4px;
+    background: rgba(248, 246, 243, 0.8);
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-weight: 500;
+}
+
+.desktop-icon:hover .icon-label {
+    background: var(--sketch-blue);
+    color: white;
+    border-color: var(--charcoal-gray);
+}
+
+/* ========================================
+   BROWSER WINDOW
+   ======================================== */
+
+.browser-window {
+    position: fixed;
+    /* Window will be centered by windowManager.js on load */
+    /* Initial centering for browsers without JS */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 900px;
+    height: 600px;
+    background: var(--window-bg);
+    border: 2px solid var(--charcoal-gray);
+    border-radius: 12px;
+    box-shadow: 0 12px 35px rgba(26, 26, 26, 0.15);
+    backdrop-filter: blur(20px);
+    z-index: 100;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    /* Smooth transitions when not dragging */
+    transition: opacity 0.3s ease;
+    /* Optimize for position changes during drag */
+    will-change: left, top;
+}
+
+/* Responsive sizing for smaller screens */
+@media (max-width: 1024px) {
+    .browser-window {
+        width: 90vw;
+        max-width: 900px;
+        height: 80vh;
+        max-height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    .browser-window {
+        width: 95vw;
+        height: 85vh;
+    }
+}
+
+/* Window Header */
+.window-header {
+    height: 40px;
+    background: #e8e6e3;
+    border-bottom: 1px solid #c1c1c1;
+    position: relative;
+    cursor: move;
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+}
+
+.window-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.control {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.close-btn {
+    background: #ff5f57;
+}
+
+.minimize-btn {
+    background: #ffbd2e;
+}
+
+.maximize-btn {
+    background: #28ca42;
+}
+
+.control:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+}
+
+.window-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--charcoal-black);
+    letter-spacing: -0.5px;
+}
+
+.window-toolbar {
+    position: absolute;
+    bottom: 8px;
+    left: 80px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.toolbar-button {
+    width: 24px;
+    height: 24px;
+    background: rgba(74, 74, 74, 0.1);
+    border: 1px solid rgba(74, 74, 74, 0.2);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.toolbar-button:hover {
+    background: rgba(74, 74, 74, 0.2);
+}
+
+.view-buttons {
+    display: flex;
+    gap: 4px;
+    background: rgba(74, 74, 74, 0.05);
+    border-radius: 8px;
+    padding: 2px;
+}
+
+.view-btn {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 10px;
+    transition: all 0.2s ease;
+}
+
+.view-btn.active,
+.view-btn:hover {
+    background: var(--sketch-blue);
+    color: white;
+}
+
+.search-box {
+    margin-left: auto;
+    position: relative;
+}
+
+.search-box input {
+    width: 200px;
+    height: 24px;
+    padding: 0 30px 0 10px;
+    border: 1px solid rgba(74, 74, 74, 0.2);
+    border-radius: 12px;
+    background: rgba(248, 246, 243, 0.8);
+    font-size: 12px;
+    outline: none;
+}
+
+.search-icon {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    opacity: 0.6;
+}
+
+/* Finder Content */
+.finder-content {
+    display: flex;
+    height: calc(100% - 40px - 24px);
+}
+
+/* Sidebar */
+.sidebar {
+    width: 200px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid rgba(26, 26, 26, 0.1);
+    padding: 12px 0;
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    margin-bottom: 20px;
+}
+
+.sidebar-title {
+    padding: 0 16px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--charcoal-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sidebar-item {
+    padding: 6px 16px;
+    font-size: 13px;
+    color: var(--charcoal-black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+    background: rgba(74, 144, 164, 0.1);
+}
+
+.sidebar-item.active {
+    background: var(--sketch-blue);
+    color: white;
+}
+
+.sidebar-icon {
+    font-size: 12px;
+    width: 16px;
+    text-align: center;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 20px;
+    background: var(--window-bg);
+}
+
+.folder-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 20px;
+}
+
+.folder-item {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.folder-item:hover {
+    background: rgba(74, 144, 164, 0.1);
+    transform: translateY(-2px);
+}
+
+.folder-item .folder-icon {
+    width: 64px;
+    height: 48px;
+    margin: 0 auto 8px;
+}
+
+.blue-folder {
+    background: var(--sketch-blue);
+    border: 2px solid var(--charcoal-gray);
+    border-radius: 6px 6px 3px 3px;
+    position: relative;
+    transform: rotate(0.5deg);
+}
+
+.blue-folder::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 6px;
+    width: 20px;
+    height: 6px;
+    background: var(--sketch-blue);
+    border: 2px solid var(--charcoal-gray);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+}
+
+.user-folder {
+    background: var(--accent-rust);
+    border: 2px solid var(--charcoal-gray);
+    border-radius: 6px 6px 3px 3px;
+    position: relative;
+    transform: rotate(-0.5deg);
+}
+
+.user-folder::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 6px;
+    width: 20px;
+    height: 6px;
+    background: var(--accent-rust);
+    border: 2px solid var(--charcoal-gray);
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+}
+
+.folder-name {
+    font-size: 12px;
+    color: var(--charcoal-black);
+    font-weight: 500;
+}
+
+/* Browser Toolbar */
+.browser-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #f1f3f4;
+    border-bottom: 1px solid #dadce0;
+}
+
+.nav-btn {
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5f6368;
+}
+
+.nav-btn:hover {
+    background: #e8eaed;
+}
+
+.nav-btn:active {
+    background: #dadce0;
+}
+
+.address-bar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid #dadce0;
+    border-radius: 24px;
+    padding: 8px 16px;
+    box-shadow: 0 1px 6px rgba(32,33,36,0.08);
+}
+
+.address-bar:focus-within {
+    box-shadow: 0 1px 6px rgba(32,33,36,0.18);
+    border-color: transparent;
+}
+
+.lock-icon {
+    font-size: 14px;
+    color: #5f6368;
+}
+
+#urlInput {
+    flex: 1;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    outline: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    color: #202124;
+}
+
+.go-btn {
+    display: none;
+}
+
+/* Browser Tabs */
+.browser-tabs {
+    display: flex;
+    align-items: flex-end;
+    gap: 0;
+    background: #dee1e6;
+    padding: 0 8px;
+    height: 36px;
+}
+
+.tab {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #c8cbcf;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    max-width: 200px;
+    transition: background 0.2s ease;
+    margin-right: 1px;
+    color: #5f6368;
+}
+
+.tab.active {
+    background: #f1f3f4;
+    color: #202124;
+    z-index: 1;
+}
+
+.tab:hover {
+    background: #d4d7db;
+}
+
+.tab.active:hover {
+    background: #f1f3f4;
+}
+
+.tab-close {
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 400;
+    transition: background 0.2s ease;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5f6368;
+}
+
+.tab-close:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.new-tab-btn {
+    width: 28px;
+    height: 28px;
+    background: transparent;
+    border: none;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5f6368;
+    margin-bottom: 4px;
+}
+
+.new-tab-btn:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* Browser Content */
+.browser-content {
+    flex: 1;
+    background: white;
+    overflow-y: auto;
+    position: relative;
+}
+
+.webpage {
+    display: none;
+    padding: 40px;
+}
+
+.webpage.active {
+    display: block;
+}
+
+/* Resize Handle */
+.resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    cursor: nwse-resize;
+    z-index: 1001;
+}
+
+.resize-handle::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid var(--charcoal-light);
+    border-bottom: 2px solid var(--charcoal-light);
+    opacity: 0.4;
+}
+
+
+/* Finder Status Bar */
+.finder-statusbar {
+    height: 24px;
+    background: var(--sidebar-bg);
+    border-top: 1px solid rgba(26, 26, 26, 0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    font-size: 11px;
+    color: var(--charcoal-light);
+}
+
+/* ========================================
+   CONTEXT MENU
+   ======================================== */
+
+.context-menu {
+    position: absolute;
+    background: var(--window-bg);
+    border: 1px solid rgba(26, 26, 26, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 8px 25px rgba(26, 26, 26, 0.2);
+    backdrop-filter: blur(20px);
+    padding: 4px 0;
+    min-width: 200px;
+    z-index: 1000;
+    display: none;
+}
+
+.context-menu.active {
+    display: block;
+}
+
+.context-item {
+    padding: 8px 16px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.context-item:hover {
+    background: var(--sketch-blue);
+    color: white;
+}
+
+.context-separator {
+    height: 1px;
+    background: rgba(26, 26, 26, 0.1);
+    margin: 4px 0;
+}
+
+/* ========================================
+   DOCK
+   ======================================== */
+
+.dock {
+    position: fixed;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(248, 246, 243, 0.85);
+    backdrop-filter: blur(30px);
+    border: 2px solid var(--charcoal-gray);
+    border-radius: 24px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    z-index: 200;
+    box-shadow: 0 12px 35px rgba(26, 26, 26, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    height: 80px;
+}
+
+.dock-item {
+    width: 52px;
+    height: 52px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform-origin: bottom center;
+}
+
+.dock-item:hover {
+    transform: translateY(-20px) scale(1.3);
+}
+
+.dock-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background: var(--charcoal-black);
+    border-radius: 50%;
+    box-shadow: 0 0 4px rgba(26, 26, 26, 0.5);
+}
+
+.dock-item.bouncing {
+    animation: dockBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes dockBounce {
+    0%, 100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-30px) scale(1.1); }
+    50% { transform: translateY(-15px) scale(1.05); }
+    75% { transform: translateY(-25px) scale(1.08); }
+}
+
+.dock-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-10px);
+    background: rgba(26, 26, 26, 0.9);
+    color: var(--paper-white);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dock-item:hover .dock-tooltip {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-15px);
+}
+
+.dock-icon {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    border: 2px solid var(--charcoal-gray);
+    position: relative;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(26, 26, 26, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.dock-item:hover .dock-icon {
+    box-shadow: 0 8px 20px rgba(26, 26, 26, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.finder-dock-icon {
+    background: linear-gradient(135deg, var(--sketch-blue) 0%, #3a7a8a 100%);
+    transform: rotate(1deg);
+}
+
+.finder-dock-icon::before {
+    content: '👁️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.app-dock-icon {
+    background: linear-gradient(135deg, var(--accent-rust) 0%, #6b3010 100%);
+    transform: rotate(-1deg);
+}
+
+.app-dock-icon::before {
+    content: '⚡';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.sketch-dock-icon {
+    background: linear-gradient(135deg, #ff6b6b 0%, #d94545 100%);
+    transform: rotate(0.5deg);
+}
+
+.sketch-dock-icon::before {
+    content: '✏️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.browser-dock-icon {
+    background: linear-gradient(135deg, #4ecdc4 0%, #3ab0a8 100%);
+    transform: rotate(-0.5deg);
+}
+
+.browser-dock-icon::before {
+    content: '🌐';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.trash-dock-icon {
+    background: linear-gradient(135deg, var(--charcoal-light) 0%, #5a5a5a 100%);
+    transform: rotate(1deg);
+}
+
+.trash-dock-icon::before {
+    content: '🗑️';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.dock-separator {
+    width: 2px;
+    height: 50px;
+    background: rgba(26, 26, 26, 0.25);
+    margin: 0 6px;
+    border-radius: 1px;
+    align-self: center;
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+
+@keyframes windowAppear {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) scale(0.9) rotate(0.5deg);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) scale(1) rotate(0.5deg);
+    }
+}
+
+.finder-window {
+    animation: windowAppear 0.4s ease-out;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .finder-window {
+        width: 90vw;
+        height: 80vh;
+        left: 5vw;
+        transform: none;
+    }
+    
+    .desktop-title {
+        font-size: 2rem;
+    }
+    
+    .folder-grid {
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .finder-content {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: 120px;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .sidebar-section {
+        display: inline-block;
+        margin-right: 20px;
+    }
+    
+    .dock {
+        padding: 6px 8px;
+        gap: 2px;
+    }
+    
+    .dock-item {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+/* ========================================
+   DRAWING MODE TOGGLE BUTTON
+   ======================================== */
+
+.drawing-toggle-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 9999;
+
+    /* Layout */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    width: 50px;
+    height: 50px;
+
+    /* Styling */
+    background: transparent;
+    border: none;
+
+    /* Interaction */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.drawing-toggle-btn:hover {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.drawing-toggle-btn:active {
+    transform: scale(1.1) rotate(-5deg);
+}
+
+.toggle-icon {
+    font-size: 48px;
+    line-height: 1;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+/* Wobble animation for button */
+@keyframes wobble {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(10deg) scale(1.2); }
+    50% { transform: rotate(-10deg) scale(1.2); }
+    75% { transform: rotate(5deg) scale(1.2); }
+}
+
+.drawing-toggle-btn.wobble {
+    animation: wobble 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ========================================
+   DRAWING MODE STYLES
+   ======================================== */
+
+/* ========================================
+   DRAWN MODE ACTIVATED
+   Replace placeholder effects with your custom assets
+   ======================================== */
+
+body.drawn-mode {
+    /* Use hand-drawn font */
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+
+/* ========================================
+   DRAWN MODE: DESKTOP BACKGROUND
+   ======================================== */
+
+body.drawn-mode .desktop-background {
+    /* Add hand-drawn texture */
+    background-image: url('../assets/drawn-desktop-bg.png');
+    background-size: cover;
+    filter:
+        contrast(1.1)
+        saturate(0.9)
+        brightness(1.05);
+}
+
+/* ========================================
+   DRAWN MODE: WINDOWS & BROWSER
+   ======================================== */
+
+body.drawn-mode .browser-window,
+body.drawn-mode .finder-window {
+    /* Hand-drawn border effect */
+    border: 4px solid var(--charcoal-black);
+    border-radius: 16px;
+    box-shadow:
+        0 0 0 2px white,
+        0 0 0 6px var(--charcoal-black),
+        8px 8px 0 rgba(26, 26, 26, 0.3);
+
+    /* Slight skew for hand-drawn feel */
+    transform: translateX(-50%) rotate(0.5deg) !important;
+
+    /* Paper texture on windows */
+    background-image: url('../assets/window-paper.png');
+    background-size: cover;
+    filter:
+        contrast(1.15)
+        saturate(0.85);
+}
+
+body.drawn-mode .browser-window:hover,
+body.drawn-mode .finder-window:hover {
+    transform: translateX(-50%) rotate(-0.3deg) !important;
+}
+
+/* Window header - crayon/marker style */
+body.drawn-mode .window-header {
+    background: linear-gradient(180deg, #f0ebe5 0%, #e8e3dd 100%);
+    border-bottom: 3px solid var(--charcoal-gray);
+    position: relative;
+}
+
+body.drawn-mode .window-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: repeating-linear-gradient(
+        90deg,
+        var(--charcoal-gray) 0px,
+        var(--charcoal-gray) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+}
+
+/* Window controls - hand-drawn circles */
+body.drawn-mode .control {
+    border: 2px solid rgba(0, 0, 0, 0.4);
+    box-shadow:
+        inset 0 1px 2px rgba(255, 255, 255, 0.5),
+        0 2px 4px rgba(0, 0, 0, 0.2);
+    filter: brightness(1.1) saturate(1.2);
+}
+
+/* ========================================
+   DRAWN MODE: MENU BAR
+   ======================================== */
+
+body.drawn-mode .menu-bar {
+    background: rgba(248, 246, 243, 0.95);
+    border-bottom: 3px solid var(--charcoal-gray);
+    box-shadow: 0 3px 0 rgba(26, 26, 26, 0.1);
+}
+
+body.drawn-mode .menu-item {
+    position: relative;
+    font-weight: 600;
+}
+
+body.drawn-mode .menu-item::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: var(--sketch-blue);
+    transition: width 0.3s ease;
+}
+
+body.drawn-mode .menu-item:hover::after {
+    width: 80%;
+}
+
+/* ========================================
+   DRAWN MODE: DOCK
+   ======================================== */
+
+body.drawn-mode .dock {
+    background: rgba(248, 246, 243, 0.9);
+    border: 4px solid var(--charcoal-gray);
+    border-radius: 28px;
+    box-shadow:
+        0 0 0 2px white,
+        0 8px 25px rgba(26, 26, 26, 0.3),
+        inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    transform: translateX(-50%) rotate(-0.5deg);
+}
+
+body.drawn-mode .dock-icon {
+    border: 3px solid var(--charcoal-gray);
+    border-radius: 20px;
+    box-shadow:
+        0 0 0 2px white,
+        3px 3px 0 rgba(26, 26, 26, 0.3);
+
+    /* REPLACE: Add your hand-drawn icons here */
+    /* Use data attributes or classes to swap icon images */
+    filter:
+        contrast(1.2)
+        saturate(0.9)
+        brightness(1.05);
+}
+
+/* Crayon-style drawing for dock icons */
+body.drawn-mode .dock-icon::before {
+    filter: brightness(1.1) saturate(1.3);
+}
+
+/* ========================================
+   DRAWN MODE: TABS & ADDRESS BAR
+   ======================================== */
+
+body.drawn-mode .browser-tabs {
+    background: #d8d4cf;
+    border-bottom: 3px solid var(--charcoal-gray);
+}
+
+body.drawn-mode .tab {
+    background: #c8c5c0;
+    border: 2px solid var(--charcoal-gray);
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    margin-right: 3px;
+    font-weight: 600;
+}
+
+body.drawn-mode .tab.active {
+    background: #f1f3f4;
+    border-width: 3px;
+    border-bottom: none;
+    margin-bottom: -2px;
+}
+
+body.drawn-mode .address-bar {
+    border: 3px solid var(--charcoal-gray);
+    border-radius: 20px;
+    box-shadow:
+        inset 0 2px 4px rgba(0, 0, 0, 0.1),
+        0 0 0 1px white;
+}
+
+/* ========================================
+   DRAWN MODE: BUTTONS & INPUTS
+   ======================================== */
+
+body.drawn-mode button,
+body.drawn-mode .nav-btn {
+    border: 2px solid var(--charcoal-gray) !important;
+    box-shadow:
+        2px 2px 0 rgba(26, 26, 26, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+}
+
+body.drawn-mode button:hover,
+body.drawn-mode .nav-btn:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        3px 3px 0 rgba(26, 26, 26, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+body.drawn-mode button:active,
+body.drawn-mode .nav-btn:active {
+    transform: translateY(1px);
+    box-shadow:
+        1px 1px 0 rgba(26, 26, 26, 0.2),
+        inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   DRAWN MODE: CONTEXT MENU
+   ======================================== */
+
+body.drawn-mode .context-menu {
+    border: 3px solid var(--charcoal-gray);
+    border-radius: 12px;
+    box-shadow:
+        0 0 0 2px white,
+        6px 6px 0 rgba(26, 26, 26, 0.25);
+    background: rgba(248, 246, 243, 0.98);
+}
+
+body.drawn-mode .context-item {
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+}
+
+body.drawn-mode .context-item:hover {
+    border-left-color: var(--sketch-blue);
+    background: rgba(74, 144, 164, 0.15);
+    transform: translateX(4px);
+}
+
+/* ========================================
+   DRAWN MODE: INTRO SCREEN
+   ======================================== */
+
+body.drawn-mode .intro-screen {
+    /* Add hand-painted sky texture */
+    /* REPLACE: Add your hand-painted sky background */
+    background-image: url('../assets/drawn-sky.png');
+    background-size: cover;
+    filter:
+        contrast(1.1)
+        saturate(1.2);
+}
+
+body.drawn-mode .intro-text,
+body.drawn-mode .intro-subtext {
+    text-shadow:
+        3px 3px 0 rgba(0, 0, 0, 0.3),
+        -1px -1px 0 rgba(255, 255, 255, 0.5);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    font-weight: 600;
+}
+
+/* ========================================
+   DRAWN MODE: GLOBAL EFFECTS
+   ======================================== */
+
+/* Add slight wiggle to all borders */
+body.drawn-mode * {
+    /* Hand-drawn imperfection */
+    image-rendering: auto;
+}
+
+/* Pencil/crayon stroke effect on text */
+body.drawn-mode {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+
+/* Add grain/noise texture overlay */
+@keyframes grain {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-5%, -5%); }
+    20% { transform: translate(-10%, 5%); }
+    30% { transform: translate(5%, -10%); }
+    40% { transform: translate(-5%, 15%); }
+    50% { transform: translate(-10%, 5%); }
+    60% { transform: translate(15%, 0); }
+    70% { transform: translate(0, 10%); }
+    80% { transform: translate(-15%, 0); }
+    90% { transform: translate(10%, 5%); }
+}
+
+/* ========================================
+   ASSET PLACEHOLDERS
+   Instructions for replacing with your drawings:
+
+   1. paper-texture.png - Scanned paper background
+   2. sketch-overlay.png - Hand-drawn texture overlay
+   3. drawn-desktop-bg.png - Hand-painted desktop
+   4. window-paper.png - Window background texture
+   5. drawn-sky.png - Hand-painted sky for intro
+
+   Add these to /assets/drawn/ folder
+   ======================================== */
+
+/* ========================================
+   WIREFRAME MOCKUP STYLES
+   Scoped to #pageHome - won't affect desktop UI
+   ======================================== */
+
+/* Base wireframe container */
+#pageHome {
+    background: #ffffff;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1;
+}
+
+/* ========================================
+   WIREFRAME PRIMITIVES
+   Basic building blocks
+   ======================================== */
+
+/* Heading placeholders - different sizes */
+.wf-heading {
+    background: #bdbdbd;
+    border-radius: 4px;
+    margin-bottom: 12px;
+    height: 16px;
+    transition: background 0.2s ease;
+}
+
+.wf-heading:hover {
+    background: #a0a0a0;
+}
+
+.wf-heading-xl {
+    height: 32px;
+    width: 70%;
+}
+
+.wf-heading-lg {
+    height: 24px;
+    width: 60%;
+}
+
+.wf-heading-sm {
+    height: 14px;
+    width: 50%;
+}
+
+/* Text line placeholders */
+.wf-text-line {
+    background: #e0e0e0;
+    border-radius: 2px;
+    height: 8px;
+    width: 100%;
+    margin-bottom: 8px;
+    transition: background 0.2s ease;
+}
+
+.wf-text-line:hover {
+    background: #d0d0d0;
+}
+
+.wf-text-line.wf-text-short {
+    width: 65%;
+}
+
+.wf-text-line.wf-text-centered {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+/* Button placeholders */
+.wf-button {
+    background: #ccc;
+    border-radius: 6px;
+    height: 36px;
+    width: 120px;
+    display: inline-block;
+    margin-right: 12px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.wf-button:hover {
+    background: #b8b8b8;
+    transform: translateY(-2px);
+}
+
+.wf-button-primary {
+    background: #9e9e9e;
+}
+
+.wf-button-primary:hover {
+    background: #757575;
+}
+
+.wf-button-secondary {
+    background: #e0e0e0;
+}
+
+.wf-button-secondary:hover {
+    background: #c8c8c8;
+}
+
+.wf-button-large {
+    width: 160px;
+    height: 44px;
+}
+
+/* Image placeholders */
+.wf-image-placeholder {
+    background: #e8e8e8;
+    border-radius: 8px;
+    border: 2px dashed #ccc;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.wf-image-placeholder:hover {
+    border-color: #b0b0b0;
+    background: #dedede;
+}
+
+.wf-image-placeholder::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    background: #d0d0d0;
+    border-radius: 4px;
+}
+
+.wf-image-lg {
+    height: 250px;
+    margin: 20px 0;
+}
+
+.wf-image-md {
+    height: 150px;
+}
+
+/* ========================================
+   NAVIGATION BAR
+   ======================================== */
+
+.wf-navbar {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    background: #f5f5f5;
+    border-bottom: 2px solid #e0e0e0;
+    gap: 20px;
+}
+
+.wf-logo {
+    background: #bdbdbd;
+    width: 100px;
+    height: 32px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
+}
+
+.wf-logo:hover {
+    background: #a0a0a0;
+}
+
+.wf-nav-links {
+    display: flex;
+    gap: 16px;
+    flex: 1;
+    margin-left: 40px;
+}
+
+.wf-nav-item {
+    background: #d4d4d4;
+    width: 60px;
+    height: 12px;
+    border-radius: 3px;
+    transition: background 0.2s ease;
+    cursor: pointer;
+}
+
+.wf-nav-item:hover {
+    background: #b8b8b8;
+}
+
+.wf-nav-cta {
+    background: #9e9e9e;
+    width: 80px;
+    height: 32px;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.wf-nav-cta:hover {
+    background: #757575;
+    transform: translateY(-2px);
+}
+
+/* ========================================
+   HERO SECTION
+   ======================================== */
+
+.wf-hero {
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    padding: 80px 40px;
+    background: #fafafa;
+}
+
+.wf-hero-content {
+    flex: 1;
+}
+
+.wf-hero-image {
+    flex: 1;
+    height: 350px;
+    background: #e8e8e8;
+    border-radius: 12px;
+    border: 2px dashed #ccc;
+    transition: all 0.2s ease;
+}
+
+.wf-hero-image:hover {
+    border-color: #b0b0b0;
+    background: #dedede;
+}
+
+.wf-button-group {
+    margin-top: 24px;
+}
+
+/* ========================================
+   FEATURES SECTION
+   ======================================== */
+
+.wf-features {
+    padding: 80px 40px;
+    background: #ffffff;
+}
+
+.wf-section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.wf-section-header .wf-heading {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wf-feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+}
+
+/* Feature Card */
+.wf-card {
+    background: #fafafa;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 30px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.wf-card:hover {
+    border-color: #d0d0d0;
+    background: #f5f5f5;
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+}
+
+.wf-card-icon {
+    background: #d4d4d4;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: background 0.2s ease;
+}
+
+.wf-card:hover .wf-card-icon {
+    background: #b8b8b8;
+}
+
+/* ========================================
+   CONTENT SECTION WITH SIDEBAR
+   ======================================== */
+
+.wf-content-section {
+    display: flex;
+    gap: 40px;
+    padding: 80px 40px;
+    background: #fafafa;
+}
+
+.wf-main-content {
+    flex: 2;
+}
+
+.wf-sidebar {
+    flex: 1;
+}
+
+.wf-sidebar-widget {
+    background: #ffffff;
+    border: 2px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    transition: all 0.2s ease;
+}
+
+.wf-sidebar-widget:hover {
+    border-color: #d0d0d0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.wf-list-item {
+    background: #e8e8e8;
+    height: 10px;
+    border-radius: 3px;
+    margin-bottom: 12px;
+    width: 90%;
+    transition: background 0.2s ease;
+}
+
+.wf-list-item:hover {
+    background: #d0d0d0;
+}
+
+.wf-list-item:last-child {
+    width: 70%;
+}
+
+/* ========================================
+   CTA SECTION
+   ======================================== */
+
+.wf-cta {
+    text-align: center;
+    padding: 80px 40px;
+    background: #f5f5f5;
+}
+
+.wf-cta .wf-heading {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.wf-cta .wf-text-line {
+    margin: 20px auto 32px;
+}
+
+.wf-cta .wf-button {
+    margin: 0 auto;
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+
+.wf-footer {
+    background: #e8e8e8;
+    padding: 60px 40px 30px;
+}
+
+.wf-footer-columns {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.wf-footer-column .wf-heading {
+    margin-bottom: 20px;
+}
+
+.wf-footer-column .wf-text-line {
+    margin-bottom: 12px;
+}
+
+.wf-footer-bottom {
+    text-align: center;
+    padding-top: 30px;
+    border-top: 2px solid #d4d4d4;
+}
+
+.wf-footer-bottom .wf-text-line {
+    width: 200px;
+    margin: 0 auto;
+}
+
+/* ========================================
+   RESPONSIVE WIREFRAME
+   ======================================== */
+
+@media (max-width: 768px) {
+    .wf-navbar {
+        flex-wrap: wrap;
+        padding: 16px 20px;
+    }
+
+    .wf-nav-links {
+        order: 3;
+        flex-basis: 100%;
+        margin-left: 0;
+        margin-top: 12px;
+    }
+
+    .wf-hero {
+        flex-direction: column;
+        padding: 40px 20px;
+        gap: 30px;
+    }
+
+    .wf-hero-image {
+        width: 100%;
+        height: 250px;
+    }
+
+    .wf-features {
+        padding: 40px 20px;
+    }
+
+    .wf-feature-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .wf-content-section {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .wf-footer-columns {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+}
+
+/* ========================================
+   DRAWING MODE ADJUSTMENTS FOR WIREFRAME
+   Keep wireframe look even in drawing mode
+   ======================================== */
+
+body.drawn-mode #pageHome .wf-heading,
+body.drawn-mode #pageHome .wf-text-line,
+body.drawn-mode #pageHome .wf-button,
+body.drawn-mode #pageHome .wf-image-placeholder {
+    /* Maintain wireframe aesthetic in drawing mode */
+    filter: none;
+}
+
+body.drawn-mode #pageHome .wf-card,
+body.drawn-mode #pageHome .wf-sidebar-widget {
+    /* Slightly sketchy borders in drawing mode */
+    border-width: 3px;
+    border-style: solid;
+}
+
+body.drawn-mode #pageHome .wf-button:hover {
+    transform: translateY(-2px) rotate(1deg);
+}
+
+/* ========================================
+   DESKTOP ICONS
+   ======================================== */
+
+.desktop-icon {
+    position: absolute;
+    width: 80px;
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 8px;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+}
+
+.desktop-icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.desktop-icon.selected {
+    background: rgba(74, 144, 164, 0.3);
+}
+
+.icon-image {
+    font-size: 48px;
+    margin-bottom: 4px;
+}
+
+.icon-label {
+    font-size: 12px;
+    color: var(--charcoal-black);
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    font-weight: 500;
+}
+
+/* ========================================
+   APP WINDOWS
+   Draggable windows managed by windowManager.js
+   Uses left/top positioning (NOT transform) for drawn mode compatibility
+   ======================================== */
+
+.app-window {
+    position: fixed;
+    background: var(--window-bg);
+    border: 1px solid var(--charcoal-gray);
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 100;
+    overflow: hidden;
+    /* Will-change for smoother dragging performance */
+    will-change: left, top;
+}
+
+.app-window.active {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Camera Window */
+#cameraWindow {
+    width: 700px;
+    height: 580px;
+    /* Centered by windowManager.js when opened */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Notepad Window */
+#notepadWindow {
+    width: 600px;
+    height: 650px;
+    /* Centered by windowManager.js when opened */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Gallery Window */
+#galleryWindow {
+    width: 800px;
+    height: 600px;
+    /* Centered by windowManager.js when opened */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Responsive sizing for app windows */
+@media (max-width: 1024px) {
+    #cameraWindow {
+        width: 85vw;
+        max-width: 700px;
+        height: 70vh;
+        max-height: 580px;
+    }
+
+    #notepadWindow {
+        width: 85vw;
+        max-width: 600px;
+        height: 75vh;
+        max-height: 650px;
+    }
+
+    #galleryWindow {
+        width: 90vw;
+        max-width: 800px;
+        height: 75vh;
+        max-height: 600px;
+    }
+}
+
+@media (max-width: 768px) {
+    #cameraWindow,
+    #notepadWindow,
+    #galleryWindow {
+        width: 95vw;
+        height: 85vh;
+    }
+}
+
+.app-content {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper-white);
+}
+
+/* ========================================
+   CAMERA APP STYLES
+   ======================================== */
+
+.camera-content {
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+#cameraCanvas {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+    border: 2px solid var(--charcoal-gray);
+    border-radius: 8px;
+    background: #000;
+}
+
+.camera-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* ========================================
+   NOTEPAD APP STYLES
+   ======================================== */
+
+.notepad-content {
+    padding: 15px;
+}
+
+#notepadCanvas {
+    width: 100%;
+    height: 480px;
+    border: 2px solid var(--charcoal-gray);
+    border-radius: 8px;
+    background: white;
+    cursor: crosshair;
+    touch-action: none;
+}
+
+.notepad-controls {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    margin-top: 15px;
+    padding: 10px;
+    background: var(--paper-cream);
+    border-radius: 8px;
+}
+
+.notepad-controls label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--charcoal-black);
+}
+
+.notepad-controls input[type="color"] {
+    width: 40px;
+    height: 30px;
+    border: 1px solid var(--charcoal-gray);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.notepad-controls input[type="range"] {
+    width: 100px;
+}
+
+/* ========================================
+   GALLERY APP STYLES
+   ======================================== */
+
+.gallery-content {
+    padding: 20px;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+}
+
+.gallery-item {
+    background: white;
+    border: 2px solid var(--charcoal-light);
+    border-radius: 8px;
+    padding: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+}
+
+.gallery-caption {
+    margin-top: 8px;
+    font-size: 11px;
+    color: var(--charcoal-gray);
+    text-align: center;
+}
+
+/* ========================================
+   APP BUTTONS
+   ======================================== */
+
+.app-button {
+    padding: 8px 16px;
+    border: 1px solid var(--charcoal-gray);
+    border-radius: 6px;
+    background: var(--paper-white);
+    color: var(--charcoal-black);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.app-button:hover {
+    background: var(--paper-cream);
+    transform: translateY(-1px);
+}
+
+.app-button:active {
+    transform: translateY(0);
+}
+
+.app-button-primary {
+    background: var(--sketch-blue);
+    color: white;
+    border-color: var(--sketch-blue);
+}
+
+.app-button-primary:hover {
+    background: #3a7a8a;
+    border-color: #3a7a8a;
+}
+
+/* ========================================
+   DRAWING MODE - APP WINDOWS
+   ======================================== */
+
+body.drawn-mode .app-window {
+    border: 4px solid var(--charcoal-black);
+    box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.3);
+}
+
+body.drawn-mode .desktop-icon {
+    font-weight: bold;
+}
+
+body.drawn-mode .icon-label {
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.9);
+    font-weight: 700;
+}
+
+body.drawn-mode .app-button {
+    border: 3px solid var(--charcoal-black);
+    font-weight: 700;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.drawn-mode .app-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+body.drawn-mode #notepadCanvas,
+body.drawn-mode #cameraCanvas {
+    border: 4px solid var(--charcoal-black);
+}
+
+body.drawn-mode .gallery-item {
+    border: 3px solid var(--charcoal-black);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.drawn-mode .gallery-item:hover {
+    transform: translateY(-2px) rotate(-1deg);
+    box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   DYNAMIC CURSOR SYSTEM
+   Changes cursor based on page state
+   ======================================== */
+
+/* Default cursor for entire site */
+body {
+    cursor: default;
+}
+
+/* Cloud cursor for intro screen */
+.intro-screen {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text y="24" font-size="24">☁️</text></svg>') 16 16, auto;
+}
+
+/* Pencil cursor for drawn mode */
+body.drawn-mode,
+body.drawn-mode * {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, auto;
+}
+
+/* Preserve specific cursors for interactive elements in drawn mode */
+body.drawn-mode .window-header {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, grab;
+}
+
+body.drawn-mode .window-header:active,
+body.drawn-mode .window-header.grabbing {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, grabbing;
+}
+
+body.drawn-mode button,
+body.drawn-mode .control,
+body.drawn-mode a,
+body.drawn-mode .dock-item {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, pointer;
+}
+
+body.drawn-mode input,
+body.drawn-mode textarea {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, text;
+}
+
+body.drawn-mode .resize-handle {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, nwse-resize;
+}
+
+/* Canvas cursor in notepad (always crosshair) */
+#notepadCanvas {
+    cursor: crosshair !important;
+}
+
+body.drawn-mode #notepadCanvas {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, crosshair !important;
+}
+
+/* ========================================
+   ENHANCED DRAWN MODE EFFECTS
+   ======================================== */
+
+/* Pencil Trail Canvas */
+#pencilTrailCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+}
+
+body.drawn-mode #pencilTrailCanvas {
+    opacity: 1;
+}
+
+
+/* ========================================
+   DRAWN MODE - DISABLE ALL INTERACTIONS
+   ======================================== */
+
+/* Disable all desktop interactions in drawn mode */
+body.drawn-mode .desktop-icon,
+body.drawn-mode .app-window,
+body.drawn-mode .browser-window,
+body.drawn-mode .window-header,
+body.drawn-mode .window-controls,
+body.drawn-mode .control,
+body.drawn-mode .browser-toolbar button,
+body.drawn-mode .browser-tabs,
+body.drawn-mode .tab,
+body.drawn-mode .address-bar input,
+body.drawn-mode .menu-bar,
+body.drawn-mode .menu-item,
+body.drawn-mode .context-menu,
+body.drawn-mode .dock,
+body.drawn-mode .dock-item,
+body.drawn-mode button:not(#drawingModeToggle),
+body.drawn-mode input:not(#drawingModeToggle input),
+body.drawn-mode textarea,
+body.drawn-mode a,
+body.drawn-mode canvas:not(#pencilTrailCanvas),
+body.drawn-mode .app-button,
+body.drawn-mode .camera-controls,
+body.drawn-mode .notepad-controls,
+body.drawn-mode .gallery-grid {
+    pointer-events: none !important;
+    user-select: none !important;
+}
+
+/* Keep Drawing Mode toggle button interactive */
+body.drawn-mode #drawingModeToggle {
+    pointer-events: auto !important;
+    user-select: auto !important;
+    z-index: 10002 !important;
+}
+
+body.drawn-mode #drawingModeToggle * {
+    pointer-events: auto !important;
+}
+
+/* ========================================
+   INTERACTIVE APPS IN DRAWN MODE
+   Camera, Notepad, and Gallery remain fully functional
+   ======================================== */
+
+/* Re-enable interactions for Camera, Notepad, and Gallery apps */
+body.drawn-mode #cameraWindow,
+body.drawn-mode #cameraWindow *,
+body.drawn-mode #notepadWindow,
+body.drawn-mode #notepadWindow *,
+body.drawn-mode #galleryWindow,
+body.drawn-mode #galleryWindow *,
+body.drawn-mode #cameraIcon,
+body.drawn-mode #notepadIcon,
+body.drawn-mode #galleryIcon {
+    pointer-events: auto !important;
+    user-select: auto !important;
+}
+
+/* Special handling for canvases in these apps */
+body.drawn-mode #cameraCanvas,
+body.drawn-mode #notepadCanvas {
+    pointer-events: auto !important;
+    cursor: crosshair !important;
+}
+
+/* Disable hover effects in drawn mode since elements are non-interactive */
+body.drawn-mode .desktop-icon:hover,
+body.drawn-mode .app-window:hover .window-title,
+body.drawn-mode .browser-window:hover .window-title,
+body.drawn-mode .dock-item:hover {
+    animation: wiggle 0.5s ease-in-out infinite;
+    /* Keep animation for visual effect even though not clickable */
+}
+
+/* Ensure pencil trail canvas stays non-interactive */
+body.drawn-mode #pencilTrailCanvas {
+    pointer-events: none !important;
+}
+
+/* ========================================
+   HAND-DRAWN STYLES FOR INTERACTIVE APPS
+   Camera, Notepad, and Gallery visual transformations
+   ======================================== */
+
+/* Camera App - Hand-Drawn Styling */
+body.drawn-mode #cameraWindow {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border: 3px solid #2c2c2c !important;
+    border-radius: 8px !important;
+    box-shadow: 2px 3px 0px rgba(0,0,0,0.3),
+                4px 6px 0px rgba(0,0,0,0.15) !important;
+    filter: contrast(1.1) brightness(0.98);
+}
+
+body.drawn-mode #cameraWindow .window-header {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border-bottom: 2px dashed #2c2c2c !important;
+}
+
+body.drawn-mode #cameraWindow .window-title {
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-weight: bold !important;
+    color: #1a1a1a !important;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5) !important;
+}
+
+body.drawn-mode #cameraWindow .window-controls button {
+    border: 2px solid #2c2c2c !important;
+    border-radius: 50% !important;
+    box-shadow: 1px 2px 0px rgba(0,0,0,0.2) !important;
+    filter: contrast(1.2);
+}
+
+body.drawn-mode #cameraCanvas {
+    border: 4px solid #2c2c2c !important;
+    border-radius: 4px !important;
+    box-shadow: inset 0 0 0 2px #fff,
+                inset 0 0 0 4px #2c2c2c,
+                2px 2px 8px rgba(0,0,0,0.3) !important;
+    filter: contrast(1.15) brightness(0.95) saturate(0.9) !important;
+    position: relative !important;
+}
+
+body.drawn-mode .camera-controls {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border-top: 2px dashed #2c2c2c !important;
+    padding: 12px !important;
+}
+
+body.drawn-mode .camera-controls button {
+    background: #f5f5dc !important;
+    border: 2px solid #2c2c2c !important;
+    border-radius: 6px !important;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2) !important;
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-weight: bold !important;
+    color: #2c2c2c !important;
+    transition: all 0.1s ease !important;
+}
+
+body.drawn-mode .camera-controls button:hover {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.2) !important;
+}
+
+body.drawn-mode .camera-controls button:active {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0.2) !important;
+}
+
+/* Notepad App - Hand-Drawn Styling */
+body.drawn-mode #notepadWindow {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border: 3px solid #2c2c2c !important;
+    border-radius: 8px !important;
+    box-shadow: 2px 3px 0px rgba(0,0,0,0.3),
+                4px 6px 0px rgba(0,0,0,0.15) !important;
+    filter: contrast(1.1) brightness(0.98);
+}
+
+body.drawn-mode #notepadWindow .window-header {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border-bottom: 2px dashed #2c2c2c !important;
+}
+
+body.drawn-mode #notepadWindow .window-title {
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-weight: bold !important;
+    color: #1a1a1a !important;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5) !important;
+}
+
+body.drawn-mode #notepadWindow .window-controls button {
+    border: 2px solid #2c2c2c !important;
+    border-radius: 50% !important;
+    box-shadow: 1px 2px 0px rgba(0,0,0,0.2) !important;
+    filter: contrast(1.2);
+}
+
+body.drawn-mode #notepadCanvas {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border: 3px solid #2c2c2c !important;
+    border-radius: 4px !important;
+    box-shadow: inset 0 0 0 2px #fff,
+                inset 2px 2px 4px rgba(0,0,0,0.1),
+                2px 2px 8px rgba(0,0,0,0.2) !important;
+    position: relative !important;
+}
+
+body.drawn-mode .notepad-controls {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border-top: 2px dashed #2c2c2c !important;
+    padding: 12px !important;
+}
+
+body.drawn-mode .notepad-controls button,
+body.drawn-mode .notepad-controls input[type="color"],
+body.drawn-mode .notepad-controls input[type="range"] {
+    background: #f5f5dc !important;
+    border: 2px solid #2c2c2c !important;
+    border-radius: 6px !important;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.2) !important;
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-weight: bold !important;
+    color: #2c2c2c !important;
+    transition: all 0.1s ease !important;
+}
+
+body.drawn-mode .notepad-controls label {
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-weight: bold !important;
+    color: #2c2c2c !important;
+}
+
+body.drawn-mode .notepad-controls button:hover {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 1px 1px 0px rgba(0,0,0,0.2) !important;
+}
+
+body.drawn-mode .notepad-controls button:active {
+    transform: translate(2px, 2px) !important;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0.2) !important;
+}
+
+body.drawn-mode .notepad-controls .app-button-primary {
+    background: #fffacd !important;
+    border: 2px solid #2c2c2c !important;
+    border-radius: 6px !important;
+    box-shadow: 2px 2px 0px rgba(0,0,0,0.3) !important;
+}
+
+/* Gallery App - Hand-Drawn Styling */
+body.drawn-mode #galleryWindow {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border: 3px solid #2c2c2c !important;
+    border-radius: 8px !important;
+    box-shadow: 2px 3px 0px rgba(0,0,0,0.3),
+                4px 6px 0px rgba(0,0,0,0.15) !important;
+    filter: contrast(1.1) brightness(0.98);
+}
+
+body.drawn-mode #galleryWindow .window-header {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    border-bottom: 2px dashed #2c2c2c !important;
+}
+
+body.drawn-mode #galleryWindow .window-title {
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-weight: bold !important;
+    color: #1a1a1a !important;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5) !important;
+}
+
+body.drawn-mode #galleryWindow .window-controls button {
+    border: 2px solid #2c2c2c !important;
+    border-radius: 50% !important;
+    box-shadow: 1px 2px 0px rgba(0,0,0,0.2) !important;
+    filter: contrast(1.2);
+}
+
+body.drawn-mode .gallery-grid {
+    background: url('../assets/drawn/drawn-paper.png') !important;
+    background-size: cover !important;
+    padding: 20px !important;
+}
+
+body.drawn-mode .gallery-item {
+    position: relative !important;
+    border: 3px solid #2c2c2c !important;
+    border-radius: 2px !important;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.3),
+                inset 0 0 0 4px #fff !important;
+    transform: rotate(0deg) !important;
+    transition: all 0.2s ease !important;
+    background: #fff !important;
+    padding: 8px !important;
+}
+
+body.drawn-mode .gallery-item:nth-child(odd) {
+    transform: rotate(-1deg) !important;
+}
+
+body.drawn-mode .gallery-item:nth-child(even) {
+    transform: rotate(1deg) !important;
+}
+
+body.drawn-mode .gallery-item:nth-child(3n) {
+    transform: rotate(-0.5deg) !important;
+}
+
+body.drawn-mode .gallery-item:hover {
+    transform: rotate(0deg) scale(1.02) !important;
+    box-shadow: 3px 3px 12px rgba(0,0,0,0.4),
+                inset 0 0 0 4px #fff !important;
+    z-index: 10 !important;
+}
+
+body.drawn-mode .gallery-item img {
+    filter: contrast(1.05) brightness(0.98) saturate(0.95) !important;
+    border: 1px solid #e0e0e0 !important;
+}
+
+/* Add tape effect to gallery items */
+body.drawn-mode .gallery-item::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -8px !important;
+    left: 50% !important;
+    transform: translateX(-50%) rotate(0deg) !important;
+    width: 60px !important;
+    height: 20px !important;
+    background: rgba(255, 248, 220, 0.7) !important;
+    border: 1px solid rgba(0,0,0,0.1) !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+    z-index: 1 !important;
+}
+
+body.drawn-mode .gallery-item:nth-child(odd)::before {
+    transform: translateX(-50%) rotate(-2deg) !important;
+}
+
+body.drawn-mode .gallery-item:nth-child(even)::before {
+    transform: translateX(-50%) rotate(2deg) !important;
+}
+
+/* ========================================
+   GOOGLE-INSPIRED HOMEPAGE
+   Clean, modern design with macOS system fonts
+   ======================================== */
+
+.google-homepage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    padding: 60px 20px 40px;
+    background: #ffffff;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Colorful Logo with Rainbow Letters */
+.google-logo {
+    font-size: 90px;
+    font-weight: 400;
+    margin-bottom: 32px;
+    letter-spacing: -3px;
+    line-height: 1;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+    display: flex;
+    user-select: none;
+}
+
+.logo-letter {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+
+.logo-letter:hover {
+    transform: translateY(-5px);
+}
+
+/* Google-inspired rainbow colors */
+.logo-blue { color: #4285f4; }
+.logo-red { color: #ea4335; }
+.logo-yellow { color: #fbbc04; }
+.logo-green { color: #34a853; }
+
+/* Search Bar Container */
+.search-container {
+    width: 100%;
+    max-width: 584px;
+    margin-bottom: 28px;
+}
+
+.search-bar-wrapper {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 0 16px;
+    height: 46px;
+    border: 1px solid #dfe1e5;
+    border-radius: 24px;
+    background: #fff;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.search-bar-wrapper:hover {
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    border-color: rgba(223, 225, 229, 0);
+}
+
+.search-bar-wrapper:focus-within {
+    box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+    border-color: rgba(223, 225, 229, 0);
+}
+
+.search-icon {
+    font-size: 18px;
+    margin-right: 12px;
+    opacity: 0.6;
+}
+
+.mic-icon {
+    font-size: 18px;
+    margin-left: 8px;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.mic-icon:hover {
+    opacity: 1;
+}
+
+.search-bar {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    background: transparent;
+    color: #202124;
+}
+
+.search-bar::placeholder {
+    color: #9aa0a6;
+}
+
+/* Action Buttons */
+.button-container {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.google-button {
+    background-color: #f8f9fa;
+    border: 1px solid #f8f9fa;
+    border-radius: 4px;
+    color: #3c4043;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 11px 24px;
+    cursor: pointer;
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.google-button:hover {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    border: 1px solid #dadce0;
+    background-color: #f8f9fa;
+    transform: translateY(-1px);
+}
+
+.google-button:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+/* Drawn Mode Compatibility */
+body.drawn-mode .google-logo {
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 700;
+}
+
+body.drawn-mode .search-bar-wrapper {
+    border: 3px solid var(--charcoal-black);
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.drawn-mode .search-bar {
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 600;
+}
+
+body.drawn-mode .google-button {
+    font-family: 'DrawvecticaMini', -apple-system, BlinkMacSystemFont, sans-serif;
+    border: 3px solid var(--charcoal-black);
+    font-weight: 700;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+body.drawn-mode .google-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.3);
+}
+
+/* ========================================
+   DRAWN COMPUTER ILLUSTRATION
+   Replaces browser in Drawn Mode - draggable but not interactive
+   ======================================== */
+
+.drawn-computer-illustration {
+    position: fixed;
+    /* Will be centered by JavaScript when shown */
+    z-index: 99;
+    display: none;
+    cursor: move;
+    user-select: none;
+    /* Enable pointer events only in drawn mode for dragging */
+    pointer-events: none;
+    /* Will-change for smooth dragging */
+    will-change: left, top;
+}
+
+.drawn-computer-image {
+    max-width: 900px;
+    max-height: 600px;
+    width: auto;
+    height: auto;
+    display: block;
+    filter: drop-shadow(0 12px 35px rgba(26, 26, 26, 0.15));
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Hide browser window in Drawn Mode */
+body.drawn-mode .browser-window {
+    display: none !important;
+}
+
+/* Show and enable dragging for drawn computer illustration in Drawn Mode */
+body.drawn-mode .drawn-computer-illustration {
+    display: block;
+    pointer-events: auto; /* Enable dragging in drawn mode */
+}
+
+/* Responsive sizing */
+@media (max-width: 1024px) {
+    .drawn-computer-image {
+        max-width: 85vw;
+        max-height: 70vh;
+    }
+}
+
+@media (max-width: 768px) {
+    .drawn-computer-image {
+        max-width: 90vw;
+        max-height: 80vh;
+    }
+}

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Handmade Desktop</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <!-- Intro Screen -->
+    <div id="introScreen" class="intro-screen">
+        <div class="intro-text">Dreaming of A Handmade Web</div>
+        <div class="intro-subtext">(best viewed on desktop)</div>
+    </div>
+
+    <!-- Desktop Background -->
+    <div class="desktop-background" style="display: none;">
+        <!-- Menu Bar -->
+        <div class="menu-bar">
+            <div class="menu-item apple-menu">🍎</div>
+            <div class="menu-item">Finder</div>
+            <div class="menu-item">File</div>
+            <div class="menu-item">Edit</div>
+            <div class="menu-item">View</div>
+            <div class="menu-item">Go</div>
+            <div class="menu-item">Window</div>
+            <div class="menu-item">Help</div>
+            
+            <div class="menu-right">
+                <div class="menu-item">🔍</div>
+                <div class="menu-item">🔋</div>
+                <div class="menu-item">📶</div>
+                <div class="menu-item time">12:34 PM</div>
+            </div>
+        </div>
+        <!-- Browser Window -->
+        <div class="browser-window" id="browserWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="control close-btn"></div>
+                    <div class="control minimize-btn"></div>
+                    <div class="control maximize-btn"></div>
+                </div>
+                <div class="window-title">Web Browser</div>
+            </div>
+
+            <div class="browser-toolbar">
+                <button class="nav-btn" id="backBtn">←</button>
+                <button class="nav-btn" id="forwardBtn">→</button>
+                <button class="nav-btn" id="refreshBtn">⟳</button>
+                <div class="address-bar">
+                    <span class="lock-icon">🔒</span>
+                    <input type="text" id="urlInput" placeholder="Search Google or type a URL">
+                </div>
+            </div>
+
+            <div class="browser-tabs">
+                <div class="tab active" data-tab="home">
+                    <span>New tab   </span>
+                </div>
+            </div>
+
+            <div class="browser-content">
+                <div class="webpage active" id="pageHome">
+                    <!-- Google-Inspired Homepage -->
+                    <div class="google-homepage">
+                        <!-- Colorful Logo -->
+                        <div class="google-logo">
+                            <span class="logo-letter logo-blue">G</span><span class="logo-letter logo-red">O</span><span class="logo-letter logo-yellow">O</span><span class="logo-letter logo-blue">G</span><span class="logo-letter logo-green">L</span><span class="logo-letter logo-red">E</span>
+                        </div>
+
+                        <!-- Search Bar Container -->
+                        <div class="search-container">
+                            <div class="search-bar-wrapper">
+                                <input type="text" class="search-bar" placeholder="Search the web">
+                                <span class="mic-icon">🎤</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="button-container">
+                            <button class="google-button">Search</button>
+                            <button class="google-button">I'm Feeling Lucky</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Drawn Computer Illustration (replaces browser in Drawn Mode) -->
+        <div class="drawn-computer-illustration" id="drawnComputerWindow">
+            <img src="assets/drawn/drawn-computer.png" alt="Hand-drawn computer" class="drawn-computer-image">
+        </div>
+
+        <!-- Context Menu -->
+        <div class="context-menu" id="contextMenu">
+            <div class="context-item">New Tab</div>
+            <div class="context-separator"></div>
+            <div class="context-item">Show in Enclosing Folder</div>
+            <div class="context-separator"></div>
+            <div class="context-item">Remove from Sidebar</div>
+            <div class="context-item">Get Info</div>
+            <div class="context-item">Add to Dock</div>
+        </div>
+
+        <!-- Desktop Icons -->
+        <div class="desktop-icon" id="cameraIcon" data-type="camera" style="top: 80px; left: 30px;">
+            <div class="icon-image">📷</div>
+            <div class="icon-label">Camera</div>
+        </div>
+
+        <div class="desktop-icon" id="notepadIcon" data-type="notepad" style="top: 180px; left: 30px;">
+            <div class="icon-image">✏️</div>
+            <div class="icon-label">Notepad</div>
+        </div>
+
+        <div class="desktop-icon" id="galleryIcon" data-type="gallery" style="top: 280px; left: 30px;">
+            <div class="icon-image">🖼️</div>
+            <div class="icon-label">Gallery</div>
+        </div>
+
+        <!-- Camera App Window -->
+        <div class="app-window" id="cameraWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="control close-btn" onclick="window.desktopApps.closeCamera()"></div>
+                    <div class="control minimize-btn"></div>
+                    <div class="control maximize-btn"></div>
+                </div>
+                <div class="window-title">Camera</div>
+            </div>
+            <div class="app-content camera-content">
+                <video id="cameraVideo" autoplay playsinline style="display: none;"></video>
+                <canvas id="cameraCanvas"></canvas>
+            </div>
+        </div>
+
+        <!-- Notepad App Window -->
+        <div class="app-window" id="notepadWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="control close-btn" onclick="window.desktopApps.closeNotepad()"></div>
+                    <div class="control minimize-btn"></div>
+                    <div class="control maximize-btn"></div>
+                </div>
+                <div class="window-title">Notepad</div>
+            </div>
+            <div class="app-content notepad-content">
+                <canvas id="notepadCanvas"></canvas>
+                <div class="notepad-controls">
+                    <label>Color: <input type="color" id="penColor" value="#000000"></label>
+                    <label>Size: <input type="range" id="penSize" min="1" max="20" value="3"></label>
+                    <button class="app-button" onclick="window.desktopApps.clearNotepad()">Clear</button>
+                    <button class="app-button app-button-primary" onclick="window.desktopApps.submitDrawing()">Submit to Gallery</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gallery App Window -->
+        <div class="app-window" id="galleryWindow">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="control close-btn" onclick="window.desktopApps.closeGallery()"></div>
+                    <div class="control minimize-btn"></div>
+                    <div class="control maximize-btn"></div>
+                </div>
+                <div class="window-title">Gallery</div>
+            </div>
+            <div class="app-content gallery-content">
+                <div id="galleryGrid" class="gallery-grid"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Drawing Mode Toggle Button -->
+    <button id="drawingModeToggle" class="drawing-toggle-btn">
+        <span class="toggle-icon">✏️</span>
+    </button>
+
+
+    <!-- 1. Intro screen (runs independently) -->
+    <script src="js/intro.js"></script>
+
+    <!-- 2. Window Manager (dependency for desktop and apps) -->
+    <script src="js/windowManager.js"></script>
+
+    <!-- 3. Drawing Mode (independent, can load anytime) -->
+    <script src="js/drawingMode.js"></script>
+
+    <!-- 4. Desktop Manager (depends on windowManager) -->
+    <script src="js/desktop.js"></script>
+
+    <!-- 5. Desktop Apps (depends on windowManager) -->
+    <script src="js/apps.js"></script>
+</body>
+</html>
