@@ -904,194 +904,6 @@ body {
 }
 
 /* ========================================
-   DOCK
-   ======================================== */
-
-.dock {
-    position: fixed;
-    bottom: 12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(248, 246, 243, 0.85);
-    backdrop-filter: blur(30px);
-    border: 2px solid var(--charcoal-gray);
-    border-radius: 24px;
-    padding: 10px 16px;
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    z-index: 200;
-    box-shadow: 0 12px 35px rgba(26, 26, 26, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    height: 80px;
-}
-
-.dock-item {
-    width: 52px;
-    height: 52px;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-origin: bottom center;
-}
-
-.dock-item:hover {
-    transform: translateY(-20px) scale(1.3);
-}
-
-.dock-item.active::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 4px;
-    height: 4px;
-    background: var(--charcoal-black);
-    border-radius: 50%;
-    box-shadow: 0 0 4px rgba(26, 26, 26, 0.5);
-}
-
-.dock-item.bouncing {
-    animation: dockBounce 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes dockBounce {
-    0%, 100% { transform: translateY(0) scale(1); }
-    25% { transform: translateY(-30px) scale(1.1); }
-    50% { transform: translateY(-15px) scale(1.05); }
-    75% { transform: translateY(-25px) scale(1.08); }
-}
-
-.dock-tooltip {
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px);
-    background: rgba(26, 26, 26, 0.9);
-    color: var(--paper-white);
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    white-space: nowrap;
-    pointer-events: none;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 1000;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.dock-item:hover .dock-tooltip {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-15px);
-}
-
-.dock-icon {
-    width: 100%;
-    height: 100%;
-    border-radius: 16px;
-    border: 2px solid var(--charcoal-gray);
-    position: relative;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(26, 26, 26, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-}
-
-.dock-item:hover .dock-icon {
-    box-shadow: 0 8px 20px rgba(26, 26, 26, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.finder-dock-icon {
-    background: linear-gradient(135deg, var(--sketch-blue) 0%, #3a7a8a 100%);
-    transform: rotate(1deg);
-}
-
-.finder-dock-icon::before {
-    content: '👁️';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.app-dock-icon {
-    background: linear-gradient(135deg, var(--accent-rust) 0%, #6b3010 100%);
-    transform: rotate(-1deg);
-}
-
-.app-dock-icon::before {
-    content: '⚡';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.sketch-dock-icon {
-    background: linear-gradient(135deg, #ff6b6b 0%, #d94545 100%);
-    transform: rotate(0.5deg);
-}
-
-.sketch-dock-icon::before {
-    content: '✏️';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.browser-dock-icon {
-    background: linear-gradient(135deg, #4ecdc4 0%, #3ab0a8 100%);
-    transform: rotate(-0.5deg);
-}
-
-.browser-dock-icon::before {
-    content: '🌐';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.trash-dock-icon {
-    background: linear-gradient(135deg, var(--charcoal-light) 0%, #5a5a5a 100%);
-    transform: rotate(1deg);
-}
-
-.trash-dock-icon::before {
-    content: '🗑️';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-}
-
-.dock-separator {
-    width: 2px;
-    height: 50px;
-    background: rgba(26, 26, 26, 0.25);
-    margin: 0 6px;
-    border-radius: 1px;
-    align-self: center;
-    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.3);
-}
-
-/* ========================================
    ANIMATIONS
    ======================================== */
 
@@ -1148,15 +960,6 @@ body {
         margin-right: 20px;
     }
     
-    .dock {
-        padding: 6px 8px;
-        gap: 2px;
-    }
-    
-    .dock-item {
-        width: 44px;
-        height: 44px;
-    }
 }
 
 /* ========================================
@@ -1335,41 +1138,6 @@ body.drawn-mode .menu-item:hover::after {
 }
 
 /* ========================================
-   DRAWN MODE: DOCK
-   ======================================== */
-
-body.drawn-mode .dock {
-    background: rgba(248, 246, 243, 0.9);
-    border: 4px solid var(--charcoal-gray);
-    border-radius: 28px;
-    box-shadow:
-        0 0 0 2px white,
-        0 8px 25px rgba(26, 26, 26, 0.3),
-        inset 0 2px 4px rgba(255, 255, 255, 0.5);
-    transform: translateX(-50%) rotate(-0.5deg);
-}
-
-body.drawn-mode .dock-icon {
-    border: 3px solid var(--charcoal-gray);
-    border-radius: 20px;
-    box-shadow:
-        0 0 0 2px white,
-        3px 3px 0 rgba(26, 26, 26, 0.3);
-
-    /* REPLACE: Add your hand-drawn icons here */
-    /* Use data attributes or classes to swap icon images */
-    filter:
-        contrast(1.2)
-        saturate(0.9)
-        brightness(1.05);
-}
-
-/* Crayon-style drawing for dock icons */
-body.drawn-mode .dock-icon::before {
-    filter: brightness(1.1) saturate(1.3);
-}
-
-/* ========================================
    DRAWN MODE: TABS & ADDRESS BAR
    ======================================== */
 
@@ -1509,23 +1277,6 @@ body.drawn-mode {
     90% { transform: translate(10%, 5%); }
 }
 
-/* ========================================
-   ASSET PLACEHOLDERS
-   Instructions for replacing with your drawings:
-
-   1. paper-texture.png - Scanned paper background
-   2. sketch-overlay.png - Hand-drawn texture overlay
-   3. drawn-desktop-bg.png - Hand-painted desktop
-   4. window-paper.png - Window background texture
-   5. drawn-sky.png - Hand-painted sky for intro
-
-   Add these to /assets/drawn/ folder
-   ======================================== */
-
-/* ========================================
-   WIREFRAME MOCKUP STYLES
-   Scoped to #pageHome - won't affect desktop UI
-   ======================================== */
 
 /* Base wireframe container */
 #pageHome {
@@ -1535,12 +1286,6 @@ body.drawn-mode {
     line-height: 1;
 }
 
-/* ========================================
-   WIREFRAME PRIMITIVES
-   Basic building blocks
-   ======================================== */
-
-/* Heading placeholders - different sizes */
 .wf-heading {
     background: #bdbdbd;
     border-radius: 4px;
@@ -2353,8 +2098,7 @@ body.drawn-mode .window-header.grabbing {
 
 body.drawn-mode button,
 body.drawn-mode .control,
-body.drawn-mode a,
-body.drawn-mode .dock-item {
+body.drawn-mode a {
     cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><text x="0" y="28" font-size="24">✏️</text></svg>') 2 30, pointer;
 }
 
@@ -2415,8 +2159,6 @@ body.drawn-mode .address-bar input,
 body.drawn-mode .menu-bar,
 body.drawn-mode .menu-item,
 body.drawn-mode .context-menu,
-body.drawn-mode .dock,
-body.drawn-mode .dock-item,
 body.drawn-mode button:not(#drawingModeToggle),
 body.drawn-mode input:not(#drawingModeToggle input),
 body.drawn-mode textarea,
@@ -2470,10 +2212,8 @@ body.drawn-mode #notepadCanvas {
 /* Disable hover effects in drawn mode since elements are non-interactive */
 body.drawn-mode .desktop-icon:hover,
 body.drawn-mode .app-window:hover .window-title,
-body.drawn-mode .browser-window:hover .window-title,
-body.drawn-mode .dock-item:hover {
+body.drawn-mode .browser-window:hover .window-title {
     animation: wiggle 0.5s ease-in-out infinite;
-    /* Keep animation for visual effect even though not clickable */
 }
 
 /* Ensure pencil trail canvas stays non-interactive */

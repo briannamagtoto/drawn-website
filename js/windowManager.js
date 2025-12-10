@@ -1,9 +1,3 @@
-// ========================================
-// WINDOW MANAGER v2.0
-// Bulletproof draggable window system
-// Uses pointer events for smooth, glitch-free dragging
-// ========================================
-
 class WindowManager {
     constructor() {
         this.windows = new Map();

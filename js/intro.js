@@ -1,10 +1,3 @@
-// ========================================
-// INTRO SCREEN MANAGER
-// Handles the intro screen with cloud cursor effect
-// Fades to desktop after animation duration
-// Dependencies: windowManager.js (for browser centering)
-// ========================================
-
 // Timing constants
 const ANIMATION_DURATION = 3000; // Show intro for 3 seconds
 const FADE_TRANSITION = 800; // Fade transition duration

@@ -1,8 +1,3 @@
-// ========================================
-// DESKTOP APPS MANAGER
-// Handles Camera, Notepad, and Gallery apps
-// ========================================
-
 class DesktopApps {
     constructor() {
         this.drawings = []; // Store all submitted drawings
@@ -70,7 +65,6 @@ class DesktopApps {
     }
 
     async startWebcam() {
-        console.log('=== startWebcam called ===');
         const video = document.getElementById('cameraVideo');
         const canvas = document.getElementById('cameraCanvas');
 
@@ -82,32 +76,23 @@ class DesktopApps {
         const ctx = canvas.getContext('2d');
 
         try {
-            // CRITICAL: Stop any existing stream and animation first
-            // This ensures clean reinitialization every time
+            // Stop any existing stream and animation first
             if (this.animationFrameId) {
                 cancelAnimationFrame(this.animationFrameId);
                 this.animationFrameId = null;
-                console.log('✓ Cancelled existing animation frame');
             }
 
             if (this.currentStream) {
-                this.currentStream.getTracks().forEach(track => {
-                    track.stop();
-                    console.log('✓ Stopped existing camera track:', track.label);
-                });
+                this.currentStream.getTracks().forEach(track => track.stop());
                 this.currentStream = null;
             }
 
-            // CRITICAL: Fully reset video element
+            // Fully reset video element
             video.srcObject = null;
-            video.pause(); // Explicitly pause first
-            console.log('✓ Video srcObject cleared and paused');
+            video.pause();
 
             // Small delay to ensure video element is fully reset
             await new Promise(resolve => setTimeout(resolve, 100));
-            console.log('✓ Waited 100ms for reset');
-
-            console.log('Requesting webcam access...');
 
             // Request fresh webcam access
             this.currentStream = await navigator.mediaDevices.getUserMedia({
@@ -117,50 +102,29 @@ class DesktopApps {
                 }
             });
 
-            console.log('✓ Got new webcam stream');
-
             // Set new stream to video element
             video.srcObject = this.currentStream;
-            console.log('✓ Stream assigned to video element');
 
             // Wait for video to be ready and playing
-            console.log('Calling video.play()...');
             await video.play();
-
-            console.log('✓ Video.play() completed! State:', {
-                readyState: video.readyState,
-                paused: video.paused,
-                ended: video.ended,
-                videoWidth: video.videoWidth,
-                videoHeight: video.videoHeight
-            });
 
             // Set canvas dimensions and start rendering
             const startRendering = () => {
                 if (video.videoWidth === 0 || video.videoHeight === 0) {
-                    console.warn('Video dimensions not ready yet, waiting...');
                     setTimeout(startRendering, 50);
                     return;
                 }
 
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
-                console.log('✓ Canvas sized:', canvas.width, 'x', canvas.height);
                 this.renderCameraFrame(video, canvas, ctx);
             };
 
             // Handle both cases: metadata already loaded or needs to load
             if (video.readyState >= 2 && video.videoWidth > 0) {
-                // Metadata already loaded
-                console.log('Metadata already loaded, starting render immediately');
                 startRendering();
             } else {
-                // Wait for metadata to load
-                console.log('Waiting for metadata to load...');
-                video.addEventListener('loadedmetadata', () => {
-                    console.log('Metadata loaded event fired');
-                    startRendering();
-                }, { once: true });
+                video.addEventListener('loadedmetadata', startRendering, { once: true });
             }
 
         } catch (error) {
@@ -182,23 +146,13 @@ class DesktopApps {
     }
 
     renderCameraFrame(video, canvas, ctx) {
-        console.log('renderCameraFrame called, video state:', {
-            paused: video.paused,
-            ended: video.ended,
-            readyState: video.readyState,
-            videoWidth: video.videoWidth,
-            videoHeight: video.videoHeight
-        });
-
         if (!video || video.paused || video.ended) {
-            console.log('❌ Video not ready, stopping render loop');
             return;
         }
 
         // Check if window is still active
         const cameraWindow = document.getElementById('cameraWindow');
         if (!cameraWindow || !cameraWindow.classList.contains('active')) {
-            console.log('❌ Camera window not active, stopping render loop');
             return;
         }
 
@@ -208,11 +162,8 @@ class DesktopApps {
         if (isDrawnMode) {
             this.applySketchFilter(video, canvas, ctx);
         } else {
-            // Just draw the video normally in regular mode
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
         }
-
-        console.log('✓ Frame rendered, requesting next frame');
 
         // Continue animation loop
         this.animationFrameId = requestAnimationFrame(() =>
@@ -285,22 +236,15 @@ class DesktopApps {
 
 
     stopCamera() {
-        console.log('Stopping camera...');
-
         // Stop animation frame
         if (this.animationFrameId) {
             cancelAnimationFrame(this.animationFrameId);
             this.animationFrameId = null;
-            console.log('✓ Animation frame cancelled');
         }
 
         // Stop all webcam stream tracks
         if (this.currentStream) {
-            const tracks = this.currentStream.getTracks();
-            tracks.forEach(track => {
-                track.stop();
-                console.log('✓ Camera track stopped:', track.label);
-            });
+            this.currentStream.getTracks().forEach(track => track.stop());
             this.currentStream = null;
         }
 
@@ -309,7 +253,7 @@ class DesktopApps {
         if (video) {
             video.srcObject = null;
             video.pause();
-            video.load(); // Reset video element
+            video.load();
         }
 
         // Clear canvas
@@ -318,8 +262,6 @@ class DesktopApps {
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
-
-        console.log('✓ Camera fully stopped and cleaned up');
     }
 
     closeCamera() {
